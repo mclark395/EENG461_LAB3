@@ -5,7 +5,7 @@
 #include "main.h"
 #include "setup.h"
 #include <stdint.h>
-#include <driver/common/tm4c123gh6pm.h>
+#include <common/tm4c123gh6pm.h>
 
 int sec_count = 0;
 
