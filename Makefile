@@ -11,7 +11,7 @@ FPU		= -mfpu=fpv4-sp-d16 -mfloat-abi=softfp
 
 AFLAGS	= -mthumb ${CPU} ${FPU} -MD
 
-CFLAGS	= -mthumb ${CPU} ${FPU} -Og -ffunction-sections -fdata-sections -MD -std=c17 -Wextra -pedantic -c -Dgcc -g
+CFLAGS	= -mthumb ${CPU} ${FPU} -Og -ffunction-sections -fdata-sections -MD -std=c17 -Wextra -pedantic -c -Dgcc -g -I driver
 
 CFLAGS	+= -DPART_TM4C123GH6PM -DTARGET_IS_BLIZZARD_RA1
 
@@ -26,7 +26,7 @@ export CFLAGS AFLAGS LDFLAGS
 BUILD_DIR  := objs
 SRCS       := $(wildcard src/*.c) $(wildcard sys/*.c)
 OBJECTS    := $(addprefix $(BUILD_DIR)/,$(subst .c,.o, $(SRCS)))
-TARGET     := demoApp
+TARGET     := lab2binary
 
 all: credir $(BUILD_DIR)/$(TARGET).axf
 

@@ -34,13 +34,13 @@ int main(void)
     ui32Loop = SYSCTL_RCGC2_R;
 
     /* Configure the GPIO as output */
-    GPIO_PORTF_DIR_R = 0x08;
-    GPIO_PORTF_DEN_R = 0x08;
+    GPIO_PORTF_DIR_R = 0x04;
+    GPIO_PORTF_DEN_R = 0x04;
 
     while (1)
     {
         /* Turn on LED */
-        GPIO_PORTF_DATA_R |= 0x08;
+        GPIO_PORTF_DATA_R |= 0x04;
 
         /* Delay 0.5s */
         for(ui32Loop = 0; ui32Loop < 200000; ui32Loop++)
@@ -48,7 +48,7 @@ int main(void)
         }
 
         /* Turn off LED */
-        GPIO_PORTF_DATA_R &= ~(0x08);
+        GPIO_PORTF_DATA_R &= ~(0x04);
 
         /* Delay 0.5s */
         for(ui32Loop = 0; ui32Loop < 200000; ui32Loop++)
