@@ -1,0 +1,59 @@
+
+CC		= arm-none-eabi-gcc
+LD		= arm-none-eabi-ld
+AR		= arm-none-eabi-ar
+AS		= arm-none-eabi-as
+OBJSIZE	= arm-none-eabi-size
+OBJDUMP	= arm-none-eabi-objdump
+OBJCOPY	= arm-none-eabi-objcopy
+CPU		= -mcpu=cortex-m4
+FPU		= -mfpu=fpv4-sp-d16 -mfloat-abi=softfp
+
+AFLAGS	= -mthumb ${CPU} ${FPU} -MD
+
+CFLAGS	= -mthumb ${CPU} ${FPU} -Og -ffunction-sections -fdata-sections -MD -std=c17 -Wextra -pedantic -c -Dgcc -g
+
+CFLAGS	+= -DPART_TM4C123GH6PM -DTARGET_IS_BLIZZARD_RA1
+
+LDFLAGS=--gc-sections
+
+AFLAGS+=${patsubst %,-I%,${subst :, ,${IPATH}}}
+CFLAGS+=${patsubst %,-I%,${subst :, ,${IPATH}}}
+
+export CC LD AR AS OBJCOPY
+export CFLAGS AFLAGS LDFLAGS
+
+BUILD_DIR  := objs
+SRCS       := $(wildcard src/*.c) $(wildcard sys/*.c)
+OBJECTS    := $(addprefix $(BUILD_DIR)/,$(subst .c,.o, $(SRCS)))
+TARGET     := demoApp
+
+all: credir $(BUILD_DIR)/$(TARGET).axf
+
+# Compile
+$(BUILD_DIR)/%.o: %.c
+	$(CC) $(CFLAGS) -o $(@) -MD -MF $(addprefix $(BUILD_DIR)/,$(subst .c,.d,$<)) $(^)
+
+# Linking
+$(BUILD_DIR)/$(TARGET).axf: $(OBJECTS)
+	@$(LD) $(OBJECTS) -T sys/tm4c123.ld --entry ResetISR $(LDFLAGS) -o $(@) -Map=$(BUILD_DIR)/$(TARGET).map
+	@$(OBJCOPY) -O binary ${@} ${@:.axf=.bin}
+	@$(OBJDUMP) -Sd -W $(@) > ${BUILD_DIR}/$(TARGET).lss
+	@$(OBJSIZE) ${@}
+
+# Load demoApp to device
+flash:
+	sudo lm4flash $(BUILD_DIR)/$(TARGET).bin
+
+clean:
+	rm -rf $(BUILD_DIR)/*
+
+credir:
+	mkdir -p $(BUILD_DIR)
+	mkdir -p $(BUILD_DIR)/src
+	mkdir -p $(BUILD_DIR)/sys
+
+app_info: $(BUILD_DIR)/${TARGET}.axf
+	arm-none-eabi-readelf -a $(^)
+
+.PHONY: all clean flash compiling app_info
