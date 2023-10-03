@@ -10,14 +10,39 @@
 int sec_count = 0;
 
 int main (void) {
-    /*
-     * Blue is PF2
-     * Pin: 7 6 5 4 3 2 1 0
-     * Bit: 0 0 0 0 0 1 0 0
-     * Val: 0x04
-     */
-    GPIO_PORTF_DATA_R |= BLUE_LED;
+    setup();
 
+    while (1) {
+        for(uint32_t i = 0; i < 53333333; i++) {
+            sec_count++;
+        }
+
+        /*
+         * Start loop by turning on blue LED
+         */
+        GPIO_PORTF_DATA_R |= BLUE_LED;
+
+        /*
+         * After 1 second of blue LED being on, turn on the red LED (leaving blue LED on)
+         */
+        if ((GPIO_PORTF_DATA_R & BLUE_LED) && sec_count == 1) {
+            GPIO_PORTF_DATA_R |= RED_LED;
+        }
+
+        /*
+         * After 2 seconds of red and blue LEDs being on, turn both of them off
+         */
+        if ((GPIO_PORTF_DATA_R & (BLUE_LED | RED_LED)) == (BLUE_LED | RED_LED) && sec_count == 3) {
+            GPIO_PORTF_DATA_R &= ~(BLUE_LED | RED_LED); //Clear two LEDs
+        }
+
+        /*
+         * Reset seconds counter to restart LED loop
+         */
+        if (sec_count == 5) {
+            sec_count = 0;
+        }
+    }
 
     return (0);
 }
