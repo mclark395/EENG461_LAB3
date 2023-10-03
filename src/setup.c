@@ -1,10 +1,6 @@
 #include "common/tm4c123gh6pm.h"
 #include "setup.h"
 
-#define GREEN_LED (1 << 3)
-#define BLUE_LED (1 << 2)
-#define RED_LED (1 << 1)
-
 void setup(void) {
 	// Enable GPIO clock
 	SYSCTL_RCGCGPIO_R |= (1 << 5);
@@ -14,7 +10,15 @@ void setup(void) {
 	GPIO_PORTF_DR8R_R |= RGB_PINS;
 	
 	// Set initial values
+	GPIO_PORTF_DATA_R &= ~RGB_PINS; //All off to start
+	
 	// Set pin directions
 	GPIO_PORTF_DIR_R |= RGB_PINS;
 	
+	//SW2 pullup
+	GPIO_PORTF_PUR_R |= SW1_PIN;
+	
+	//Enable interrupts on value of buttons
+	GPIO_PORTF_IEV_R &= ~SW1_PIN; //Falling edge
+	GPIO_PORTF_IM_R |= SW1_PIN;
 }
