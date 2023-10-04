@@ -5,4 +5,6 @@
 #ifndef EENG461_LAB_2_MAIN_H
 #define EENG461_LAB_2_MAIN_H
 
+int main (void);
+
 #endif //EENG461_LAB_2_MAIN_H
