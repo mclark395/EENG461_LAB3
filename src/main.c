@@ -7,15 +7,15 @@
 #include <stdint.h>
 #include <common/tm4c123gh6pm.h>
 
-int sec_count = 0;
+int sec_count;
 
 int main (void) {
+    sec_count = 0;
     setup();
 
     while (1) {
-        for(uint32_t i = 0; i < 53333333; i++) {
-            sec_count++;
-        }
+        for(uint32_t i = 0; i < 5333333; i++) {}
+        sec_count++;
 
         /*
          * Start loop by turning on blue LED
