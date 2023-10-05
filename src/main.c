@@ -18,7 +18,7 @@ int main (void) {
     Enable_Interrupts(); //Enable Global Interrupts
 
     while (1) {
-
+}{
         switch (sec_count) {
             case 0:
                 /*
@@ -48,11 +48,9 @@ int main (void) {
  * Taken from Lab Assignment
  */
 void Disable_Interrupts(void) {
-    __asm ("  CPSID    I\n"
-           " BX LR\n");
+    __asm ("  CPSID    I\n");
 }
 
 void Enable_Interrupts(void) {
-    __asm ("  CPSIE    I\n"
-           "  BX       LR\n");
+    __asm ("  CPSIE    I\n");
 }
