@@ -22,4 +22,5 @@ void setup(void) {
 	//Enable interrupts on value of buttons
 	GPIO_PORTF_IEV_R &= ~SW1_PIN; //Falling edge
 	GPIO_PORTF_IM_R |= SW1_PIN;
+	NVIC_EN0_R |= (1 << 30); // Enable Port F interrupts in nvic
 }
