@@ -1,5 +1,6 @@
 #include "common/tm4c123gh6pm.h"
 #include "setup.h"
+#include <stdint.h>
 
 void setup(void) {
 	// Enable GPIO clock
