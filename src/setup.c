@@ -18,6 +18,7 @@ void setup(void) {
 	
 	//SW2 pullup
 	GPIO_PORTF_PUR_R |= SW1_PIN;
+	GPIO_PORTF_DEN_R |= SW1_PIN;
 	
 	//Enable interrupts on value of buttons
 	GPIO_PORTF_IEV_R &= ~SW1_PIN; //Falling edge

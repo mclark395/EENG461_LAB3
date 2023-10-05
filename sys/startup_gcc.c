@@ -7,6 +7,7 @@
 #include "inc/hw_types.h"
 #include "sw1_int.h"
 #include "timers.h"
+#include "string.h"
 
 //*****************************************************************************
 //

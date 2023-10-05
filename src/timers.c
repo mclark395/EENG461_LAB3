@@ -8,6 +8,8 @@
 #include "setup.h"
 #include "common/tm4c123gh6pm.h"
 
+volatile int32_t uptime;
+
 void configureTimer (void) {
 
     SYSCTL_RCGCTIMER_R |= SYSCTL_RCGCTIMER_R0; //Enable Run Mode Clock Gating Control for Timer 0
@@ -24,8 +26,6 @@ void configureTimer (void) {
     NVIC_EN0_R = 1 << (INT_TIMER0A - 16);
     TIMER0_CTL_R |= TIMER_CTL_TAEN; //Enable Timer
 
-    int sec_count = 0;
-
 }
 
 void timerISR (void) {
@@ -38,7 +38,7 @@ void timerISR (void) {
     } else {
         sec_count = 0;
     }
-
+	uptime++;
+	
     TIMER0_IMR_R |= TIMER_IMR_TATOIM; //Enable Interrupt
-
 }

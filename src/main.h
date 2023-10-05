@@ -1,3 +1,4 @@
+#pragma once
 //
 // Created by Mark Clark on 10/3/23.
 //

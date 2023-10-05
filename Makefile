@@ -11,11 +11,12 @@ FPU		= -mfpu=fpv4-sp-d16 -mfloat-abi=softfp
 
 AFLAGS	= -mthumb ${CPU} ${FPU} -MD
 
-CFLAGS	= -mthumb ${CPU} ${FPU} -Og -ffunction-sections -fdata-sections -MD -std=c17 -Wextra -pedantic -c -Dgcc -g -I driver -I src -I sys
+CFLAGS	= -mthumb ${CPU} ${FPU} -Og -ffunction-sections -fdata-sections -MD -std=c17 -Wall -Wextra -pedantic -c -Dgcc -g -I driver -I src -I sys
 
 CFLAGS	+= -DPART_TM4C123GH6PM -DTARGET_IS_BLIZZARD_RA1
 
 LDFLAGS=--gc-sections
+#-L /usr/lib/arm-none-eabi/newlib -lc
 
 AFLAGS+=${patsubst %,-I%,${subst :, ,${IPATH}}}
 CFLAGS+=${patsubst %,-I%,${subst :, ,${IPATH}}}
@@ -36,10 +37,10 @@ $(BUILD_DIR)/%.o: %.c
 
 # Linking
 $(BUILD_DIR)/$(TARGET).axf: $(OBJECTS)
-	@$(LD) $(OBJECTS) -T sys/tm4c123.ld --entry ResetISR $(LDFLAGS) -o $(@) -Map=$(BUILD_DIR)/$(TARGET).map
-	@$(OBJCOPY) -O binary ${@} ${@:.axf=.bin}
+	$(LD) $(OBJECTS) -T sys/tm4c123.ld --entry ResetISR $(LDFLAGS) -o $(@) -Map=$(BUILD_DIR)/$(TARGET).map
+	$(OBJCOPY) -O binary ${@} ${@:.axf=.bin}
 	@$(OBJDUMP) -Sd -W $(@) > ${BUILD_DIR}/$(TARGET).lss
-	@$(OBJSIZE) ${@}
+	$(OBJSIZE) ${@}
 
 # Load demoApp to device
 flash:
