@@ -34,7 +34,7 @@ void timerISR (void) {
     TIMER0_ICR_R |= TIMER_ICR_TATOCINT; //Clear Interrupt
 
     if (sec_count < 5) {
-    sec_count++; //Increment second counter
+        sec_count++; //Increment second counter
     } else {
         sec_count = 0;
     }
