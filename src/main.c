@@ -4,23 +4,25 @@
 
 #include "main.h"
 #include "setup.h"
+#include "timers.h"
 #include <stdint.h>
 #include <common/tm4c123gh6pm.h>
 
-int sec_count;
+volatile int sec_count = 0; //Global Variable so timerISR can increment it
 
 int main (void) {
-    sec_count = 0;
+
     setup();
+    configureTimer();
+
+    Enable_Interrupts(); //Enable Global Interrupts
+
+    /*
+     * Start loop by turning on blue LED
+     */
+    GPIO_PORTF_DATA_R |= BLUE_LED;
 
     while (1) {
-        for(uint32_t i = 0; i < 5333333; i++) {}
-        sec_count++;
-
-        /*
-         * Start loop by turning on blue LED
-         */
-        GPIO_PORTF_DATA_R |= BLUE_LED;
 
         /*
          * After 1 second of blue LED being on, turn on the red LED (leaving blue LED on)
@@ -41,9 +43,22 @@ int main (void) {
          */
         if (sec_count == 5) {
             sec_count = 0;
+            GPIO_PORTF_DATA_R |= BLUE_LED;
         }
     }
 
     return (0);
 }
 
+/*
+ * Taken from Lab Assignment
+ */
+void Disable_Interrupts(void) {
+    __asm ("  CPSID    I\n"
+           " BX LR\n");
+}
+
+void Enable_Interrupts(void) {
+    __asm ("  CPSIE    I\n"
+           "  BX       LR\n");
+}

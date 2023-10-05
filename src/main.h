@@ -5,6 +5,10 @@
 #ifndef EENG461_LAB_2_MAIN_H
 #define EENG461_LAB_2_MAIN_H
 
+extern volatile int sec_count;
+
 int main (void);
+void Disable_Interrupts(void);
+void Enable_Interrupts(void);
 
 #endif //EENG461_LAB_2_MAIN_H
