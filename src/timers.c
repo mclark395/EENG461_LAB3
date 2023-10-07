@@ -8,7 +8,7 @@
 #include "setup.h"
 #include "common/tm4c123gh6pm.h"
 
-volatile int32_t uptime;
+volatile int32_t uptime_seconds;
 
 void configureTimer (void) {
 
@@ -38,7 +38,7 @@ void timerISR (void) {
     } else {
         sec_count = 0;
     }
-	uptime++;
+	uptime_seconds++;
 	
     TIMER0_IMR_R |= TIMER_IMR_TATOIM; //Enable Interrupt
 }

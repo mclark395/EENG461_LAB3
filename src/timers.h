@@ -8,7 +8,7 @@
 #define EENG461_LAB_2_TIMERS_H
 
 extern volatile int sec_count;
-extern volatile int32_t uptime;
+extern volatile int32_t uptime_seconds;
 
 #define CYCLES_PER_SEC 16000000
 

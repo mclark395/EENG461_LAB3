@@ -16,12 +16,13 @@ void setup(void) {
 	// Set pin directions
 	GPIO_PORTF_DIR_R |= RGB_PINS;
 	
-	//SW2 pullup
+	//SW1 pullup
 	GPIO_PORTF_PUR_R |= SW1_PIN;
 	GPIO_PORTF_DEN_R |= SW1_PIN;
 	
 	//Enable interrupts on value of buttons
-	GPIO_PORTF_IEV_R &= ~SW1_PIN; //Falling edge
-	GPIO_PORTF_IM_R |= SW1_PIN;
-	NVIC_EN0_R |= (1 << 30); // Enable Port F interrupts in nvic
+	GPIO_PORTF_IS_R &= ~SW1_PIN; //Edge triggered
+	GPIO_PORTF_IBE_R |= SW1_PIN; //Both Edges
+	GPIO_PORTF_IM_R |= SW1_PIN;  //Unmask the pin
+	NVIC_EN0_R |= (1 << 30); 	 // Enable Port F interrupts in nvic
 }
