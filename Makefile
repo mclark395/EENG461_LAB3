@@ -26,14 +26,15 @@ export CFLAGS AFLAGS LDFLAGS
 
 BUILD_DIR  := objs
 SRCS       := $(wildcard src/*.c) $(wildcard sys/*.c)
+HEADERS    := $(wildcard src/*.h) $(wildcard src/*.h) Makefile
 OBJECTS    := $(addprefix $(BUILD_DIR)/,$(subst .c,.o, $(SRCS)))
 TARGET     := lab2binary
 
 all: credir $(BUILD_DIR)/$(TARGET).axf
 
 # Compile
-$(BUILD_DIR)/%.o: %.c
-	$(CC) $(CFLAGS) -o $(@) -MD -MF $(addprefix $(BUILD_DIR)/,$(subst .c,.d,$<)) $(^)
+$(BUILD_DIR)/%.o: %.c $(HEADERS)
+	$(CC) $(CFLAGS) -o $(@) -MD -MF $(addprefix $(BUILD_DIR)/,$(subst .c,.d,$<)) $(firstword $^)
 
 # Linking
 $(BUILD_DIR)/$(TARGET).axf: $(OBJECTS)

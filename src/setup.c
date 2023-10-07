@@ -5,6 +5,7 @@
 void setup(void) {
 	// Enable GPIO clock
 	SYSCTL_RCGCGPIO_R |= (1 << 5);
+	while(!(SYSCTL_PRGPIO_R & SYSCTL_PRGPIO_R5)) {};
 	
 	// Configure pins
 	GPIO_PORTF_DEN_R |= RGB_PINS;
@@ -24,5 +25,8 @@ void setup(void) {
 	GPIO_PORTF_IS_R &= ~SW1_PIN; //Edge triggered
 	GPIO_PORTF_IBE_R |= SW1_PIN; //Both Edges
 	GPIO_PORTF_IM_R |= SW1_PIN;  //Unmask the pin
+	
+	NVIC_PRI7_R = (NVIC_PRI7_R & ~NVIC_PRI7_INT30_M) | (0x7 << NVIC_PRI7_INT30_S); //Set the PORTF interrupt to the lowest priority.
+	
 	NVIC_EN0_R |= (1 << 30); 	 // Enable Port F interrupts in nvic
 }
