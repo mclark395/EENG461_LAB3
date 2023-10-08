@@ -40,7 +40,7 @@ void sw1_debounce(void){
 		return;
 	}
 	
-	//Atomic read of the current time
+	//Critical Section: read of the current time
 	__asm("CPSID I\n"); //Disable interrupt handling
 	do {
 		if(TIMER_ISR_IS_PENDING) timerISR();
