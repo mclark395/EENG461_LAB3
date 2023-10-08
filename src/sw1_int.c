@@ -11,8 +11,11 @@
 
 #define TIMER_ISR_IS_PENDING (TIMER0_MIS_R & TIMER_ICR_TATOCINT)
 
+static void sw1_debounce(void);
+
 void PORTF_int_handler(void){
-	// ASSUMPTION: ONLY SW1 ON PORTF is toggled. If more pins were being toggled, then we would need to dispatch a different handeler for each.
+	// ASSUMPTION: ONLY SW1 ON PORTF is toggled. 
+	// If more pins were being toggled, then we would need to dispatch a different handeler for each.
 	// Such code might look like this.
 	
 	if(GPIO_PORTF_MIS_R & SW1_PIN) {
@@ -24,7 +27,7 @@ void PORTF_int_handler(void){
 }
 
 //Performs debounce by disallowing further input after the first edge transition until MIN_CLOCKS_DEBOUNCE has passed.
-void sw1_debounce(void){
+static void sw1_debounce(void){
 	static int32_t uptime_last = 0; 
 	static int32_t cycles_last = 0;
 	static enum { RELEASED, PRESSED } button_state = RELEASED;

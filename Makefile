@@ -49,6 +49,7 @@ flash:
 
 clean:
 	rm -rf $(BUILD_DIR)/*
+	rm lab2_report.pdf
 
 credir:
 	mkdir -p $(BUILD_DIR)
@@ -58,4 +59,9 @@ credir:
 app_info: $(BUILD_DIR)/${TARGET}.axf
 	arm-none-eabi-readelf -a $(^)
 
-.PHONY: all clean flash compiling app_info
+%.pdf: docs/src/%.md Makefile
+	pandoc $< -o $@ --highlight-style tango --pdf-engine=xelatex 
+
+report: lab2_report.pdf
+
+.PHONY: all clean flash compiling app_info report
