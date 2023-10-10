@@ -20,9 +20,6 @@ Task scheduling is a nescessary part of real-time embedded systems that allows f
 #### Appendix - main.h
 ```c
 #pragma once
-//
-// Created by Mark Clark on 10/3/23.
-//
 
 #ifndef EENG461_LAB_2_MAIN_H
 #define EENG461_LAB_2_MAIN_H
@@ -36,10 +33,6 @@ void Enable_Interrupts(void);
 
 #### Appendix - main.c
 ```c
-//
-// Created by Mark Clark on 10/3/23.
-//
-
 #include "main.h"
 #include "setup.h"
 #include "timers.h"
@@ -153,7 +146,6 @@ void PORTF_int_handler(void);
 
 #### Appendix - sw1_int.c
 ```c
-
 #include "sw1_int.h"
 
 #include <stdbool.h>
@@ -234,9 +226,6 @@ static void sw1_debounce(void){
 
 #### Appendix - timers.h
 ```c
-//
-// Created by Mark Clark on 10/3/23.
-//
 #include "stdint.h"
 
 #ifndef EENG461_LAB_2_TIMERS_H
@@ -256,10 +245,6 @@ void timerISR (void);
 
 #### Appendix - timers.h
 ```c
-//
-// Created by Mark Clark on 10/3/23.
-//
-
 #include <stdint.h>
 #include "timers.h"
 #include "main.h"
@@ -305,7 +290,6 @@ void timerISR (void) {
 
 #### Appendix - Makefile
 ```make
-
 CC		= arm-none-eabi-gcc
 LD		= arm-none-eabi-ld
 AR		= arm-none-eabi-ar
