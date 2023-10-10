@@ -1,7 +1,3 @@
-//
-// Created by Mark Clark on 10/3/23.
-//
-
 #include <stdint.h>
 #include "timers.h"
 #include "main.h"

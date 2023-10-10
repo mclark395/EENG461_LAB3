@@ -30,3 +30,10 @@ void setup(void) {
 	
 	NVIC_EN0_R |= (1 << 30); 	 // Enable Port F interrupts in nvic
 }
+
+void configureADC (void) {
+    // Enable ADC Clock
+    SYSCTL_RCGCADC_R |= (1 << 0);
+    while(!(SYSCTL_PRADC_R0))
+
+}
