@@ -8,8 +8,6 @@
 #include <stdint.h>
 #include <common/tm4c123gh6pm.h>
 
-volatile int sec_count;
-
 int main (void) {
 
     setup();
