@@ -28,7 +28,7 @@ BUILD_DIR  := objs
 SRCS       := $(wildcard src/*.c) $(wildcard sys/*.c)
 HEADERS    := $(wildcard src/*.h) $(wildcard src/*.h) Makefile
 OBJECTS    := $(addprefix $(BUILD_DIR)/,$(subst .c,.o, $(SRCS)))
-TARGET     := lab2binary
+TARGET     := lab3binary
 
 all: credir $(BUILD_DIR)/$(TARGET).axf
 
@@ -49,7 +49,7 @@ flash:
 
 clean:
 	rm -rf $(BUILD_DIR)/*
-	rm lab2_report.pdf
+	rm lab3_report.pdf
 
 credir:
 	mkdir -p $(BUILD_DIR)
@@ -62,6 +62,6 @@ app_info: $(BUILD_DIR)/${TARGET}.axf
 %.pdf: docs/src/%.md Makefile
 	pandoc $< -o $@ --highlight-style tango --pdf-engine=xelatex 
 
-report: lab2_report.pdf
+report: lab3_report.pdf
 
 .PHONY: all clean flash compiling app_info report
