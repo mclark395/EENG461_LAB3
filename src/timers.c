@@ -9,6 +9,7 @@
 #include "common/tm4c123gh6pm.h"
 
 volatile int32_t uptime_seconds;
+volatile int sec_count;
 
 void configureTimer (void) {
 
@@ -25,7 +26,6 @@ void configureTimer (void) {
     TIMER0_IMR_R |= TIMER_IMR_TATOIM; //Enable Interrupt as Timeout
     NVIC_EN0_R = 1 << (INT_TIMER0A - 16);
     TIMER0_CTL_R |= TIMER_CTL_TAEN; //Enable Timer
-
 }
 
 void timerISR (void) {
